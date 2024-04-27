@@ -19,6 +19,7 @@
       <form-field-timepicker
         [label]="'Expiration time'"
         [control]="this.getFormControl('expirationTime')"
+        [dateControl]="this.getFormControl('expirationDate')"
         [placeholder]="'09:00'"
         [mask]="'00:00'"
         [minDateTime]="todayDate"

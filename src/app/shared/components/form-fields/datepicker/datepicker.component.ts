@@ -60,7 +60,7 @@ export class DatepickerComponent implements OnInit, OnDestroy {
     this.cdRef.markForCheck();
   }
 
-  private formattedDate(value: string): DateTime<boolean> {
+  private getLuxonDate(value: string): DateTime<boolean> {
     const formattedDate = value
       .split('')
       .map((number, i) => ([2, 4].includes(i) ? `/${number}` : number))
@@ -84,7 +84,7 @@ export class DatepickerComponent implements OnInit, OnDestroy {
           return false;
         }),
         tap((value: string) => {
-          const formattedDate = this.formattedDate(value);
+          const formattedDate = this.getLuxonDate(value);
 
           if (!formattedDate.isValid || formattedDate < this.minDateTime) {
             this.control.setErrors({ invalidDate: true });

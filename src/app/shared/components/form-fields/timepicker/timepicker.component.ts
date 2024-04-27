@@ -7,6 +7,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { formattedTime } from '@shared/utils/formatted-time.util';
 import { DateTime } from 'luxon';
 import { Subject, filter, takeUntil, tap } from 'rxjs';
 
@@ -18,6 +19,7 @@ import { Subject, filter, takeUntil, tap } from 'rxjs';
 })
 export class TimepickerComponent implements OnInit, OnDestroy {
   @Input() control: FormControl = new FormControl();
+  @Input() dateControl: FormControl = new FormControl();
   @Input() label: string = '';
   @Input() placeholder: string = '';
   @Input() mask: string = '';
@@ -47,8 +49,7 @@ export class TimepickerComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$),
         filter((value) => value.length === 4),
         tap((value: string) => {
-          const hours = Number(value.substring(0, 2));
-          const minutes = Number(value.substring(2, 4));
+          const { hours, minutes } = formattedTime(value);
 
           if (hours < 24 && minutes < 60) return;
 

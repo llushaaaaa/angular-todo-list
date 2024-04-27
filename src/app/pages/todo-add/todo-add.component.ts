@@ -20,6 +20,8 @@ import { DateTime } from 'luxon';
 import { FormFieldsModule } from '@shared/components/form-fields/form-fields.module';
 import { ButtonComponent } from '@shared/components/button/button.component';
 import { ITodo } from '@interfaces/todo.interface';
+import { formattedDate } from '@shared/utils/formatted-date.util';
+import { formattedTime } from '@shared/utils/formatted-time.util';
 
 @Component({
   selector: 'app-todo-add',
@@ -87,11 +89,8 @@ export class TodoAddComponent implements OnInit {
     const fullDate: string = this.getFormControl('expirationDate').value;
     const fullTime: string = this.getFormControl('expirationTime').value;
 
-    const month = Number(fullDate.substring(0, 2));
-    const day = Number(fullDate.substring(2, 4));
-    const year = Number(fullDate.substring(4));
-    const hour = Number(fullTime.substring(0, 2))
-    const minute = Number(fullTime.substring(2));
+    const { month, day, year } = formattedDate(fullDate);
+    const { hours: hour, minutes: minute } = formattedTime(fullTime);
 
     return DateTime.now()
       .set({ month, day, year, hour, minute, second: 0, millisecond: 0 })
