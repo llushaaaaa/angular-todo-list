@@ -14,7 +14,7 @@
         [control]="this.getFormControl('expirationDate')"
         [placeholder]="'MM/DD/YYYY'"
         [mask]="'00/00/0000'"
-        [minDateTime]="todayDate"
+        [minDateTime]="todayDateWithoutTime"
       ></form-field-datepicker>
       <form-field-timepicker
         [label]="'Expiration time'"
@@ -22,9 +22,13 @@
         [dateControl]="this.getFormControl('expirationDate')"
         [placeholder]="'09:00'"
         [mask]="'00:00'"
-        [minDateTime]="todayDate"
+        [minDateTime]="todayDateWithTime"
       ></form-field-timepicker>
-      <app-button class="todo-add__button" [text]="'Create'"></app-button>
+      <app-button
+        class="todo-add__button"
+        [text]="'Create'"
+        [disabled]="todoAddForm.invalid"
+      ></app-button>
     </form>
   </app-widget>
 </div>

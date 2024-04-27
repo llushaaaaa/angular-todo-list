@@ -1,32 +1,34 @@
 <div class="form-field-timepicker">
   <mat-form-field appearance="outline">
+    <!-- Label -->
     <mat-label>{{ label }}</mat-label>
+    <!-- Input -->
     <input
       matInput
       [formControl]="control"
       [mask]="mask"
       [placeholder]="placeholder"
     />
+    <!-- Input Hidden -->
     <input
       type="hidden"
       [ngxTimepicker]="timePicker"
       [format]="24"
       [min]="minDateTime"
     />
+    <!-- Timepicker Toggle -->
     <ngx-material-timepicker-toggle
       matIconSuffix
       [for]="timePicker"
     ></ngx-material-timepicker-toggle>
+    <!-- Timepicker -->
     <ngx-material-timepicker
       #timePicker
-      [theme]="{
-        container: { bodyBackgroundColor: '#d7e3ff', buttonColor: '#3f51b5' },
-        dial: { dialBackgroundColor: '#3f51b5' },
-        clockFace: { clockHandColor: '#3f51b5' }
-      }"
+      [theme]="timepickerTheme"
       (timeSet)="setTime($event)"
     ></ngx-material-timepicker>
   </mat-form-field>
+  <!-- Error -->
   <span
     *ngIf="control.invalid && control.touched"
     class="form-field-timepicker__error"

@@ -8,8 +8,9 @@ import {
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { formattedTime } from '@shared/utils/formatted-time.util';
+import { getExpirationDate } from '@shared/utils/get-expiration-date.util';
 import { DateTime } from 'luxon';
-import { Subject, filter, takeUntil, tap } from 'rxjs';
+import { Subject, takeUntil, tap } from 'rxjs';
 
 @Component({
   selector: 'form-field-timepicker',
@@ -25,7 +26,17 @@ export class TimepickerComponent implements OnInit, OnDestroy {
   @Input() mask: string = '';
   @Input() minDateTime: DateTime<boolean> | string = '';
 
+  public readonly timepickerTheme = {
+    container: { bodyBackgroundColor: '#d7e3ff', buttonColor: '#3f51b5' },
+    dial: { dialBackgroundColor: '#3f51b5' },
+    clockFace: { clockHandColor: '#3f51b5' },
+  };
+
   private destroy$ = new Subject<void>();
+
+  public get isNeededMinDateTime(): boolean {
+    return this.dateControl.touched && this.dateControl.valid;
+  }
 
   constructor(private cdRef: ChangeDetectorRef) {}
 
@@ -47,9 +58,20 @@ export class TimepickerComponent implements OnInit, OnDestroy {
     this.control.valueChanges
       .pipe(
         takeUntil(this.destroy$),
-        filter((value) => value.length === 4),
         tap((value: string) => {
+          !this.control.touched && this.control.markAsTouched();
+
+          if (value.length !== 4) {
+            this.control.setErrors({ invalidTime: true });
+            return;
+          }
+
           const { hours, minutes } = formattedTime(value);
+
+          const expirationDate = getExpirationDate(
+            this.dateControl.value,
+            this.control.value
+          );
 
           if (hours < 24 && minutes < 60) return;
 

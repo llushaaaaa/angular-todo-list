@@ -13,15 +13,13 @@ import {
   Validators,
 } from '@angular/forms';
 import { WidgetComponent } from '@components/widget/widget.component';
-import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { TodosService } from '@services/todos.service';
 import { DateTime } from 'luxon';
 import { FormFieldsModule } from '@shared/components/form-fields/form-fields.module';
 import { ButtonComponent } from '@shared/components/button/button.component';
 import { ITodo } from '@interfaces/todo.interface';
-import { formattedDate } from '@shared/utils/formatted-date.util';
-import { formattedTime } from '@shared/utils/formatted-time.util';
+import { getExpirationDate } from '@shared/utils/get-expiration-date.util';
 
 @Component({
   selector: 'app-todo-add',
@@ -41,7 +39,13 @@ import { formattedTime } from '@shared/utils/formatted-time.util';
 export class TodoAddComponent implements OnInit {
   public todoAddForm = new FormGroup<any>({});
 
-  public todayDate = DateTime.local();
+  public todayDateWithTime = DateTime.local();
+  public todayDateWithoutTime = this.todayDateWithTime.set({
+    hour: 0,
+    minute: 0,
+    second: 0,
+    millisecond: 0,
+  });
 
   constructor(
     private fb: FormBuilder,
@@ -58,16 +62,16 @@ export class TodoAddComponent implements OnInit {
   }
 
   public onCreateTodo(): void {
-    if (this.todoAddForm.invalid) {
-      this.todoAddForm.markAllAsTouched();
-      return;
-    }
+    const fullDate: string = this.getFormControl('expirationDate').value;
+    const fullTime: string = this.getFormControl('expirationTime').value;
+
+    const expirationAt = String(getExpirationDate(fullDate, fullTime).toISO());
 
     const todo: ITodo = {
+      expirationAt,
       id: crypto.randomUUID(),
       title: this.getFormControl('title').value,
       favorite: false,
-      expirationAt: this.getExpirationDate(),
       createAt: DateTime.now().toISO(),
     };
 
@@ -83,17 +87,5 @@ export class TodoAddComponent implements OnInit {
       expirationDate: this.fb.control('', Validators.required),
       expirationTime: this.fb.control('', Validators.required),
     });
-  }
-
-  private getExpirationDate(): string {
-    const fullDate: string = this.getFormControl('expirationDate').value;
-    const fullTime: string = this.getFormControl('expirationTime').value;
-
-    const { month, day, year } = formattedDate(fullDate);
-    const { hours: hour, minutes: minute } = formattedTime(fullTime);
-
-    return DateTime.now()
-      .set({ month, day, year, hour, minute, second: 0, millisecond: 0 })
-      .toISO();
   }
 }

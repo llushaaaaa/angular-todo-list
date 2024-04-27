@@ -1,12 +1,15 @@
 <div class="form-field-textarea">
   <mat-form-field appearance="outline">
+    <!-- Label -->
     <mat-label>{{ label }}</mat-label>
+    <!-- Textarea -->
     <textarea
       matInput
       [formControl]="control"
       [placeholder]="placeholder"
     ></textarea>
   </mat-form-field>
+  <!-- Error -->
   <span
     *ngIf="control.invalid && control.touched"
     class="form-field-textarea__error"

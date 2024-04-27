@@ -13,7 +13,7 @@ import {
   MatDatepickerInputEvent,
 } from '@angular/material/datepicker';
 import { DateTime } from 'luxon';
-import { Subject, filter, takeUntil, tap } from 'rxjs';
+import { Subject, takeUntil, tap } from 'rxjs';
 
 @Component({
   selector: 'form-field-datepicker',
@@ -73,17 +73,14 @@ export class DatepickerComponent implements OnInit, OnDestroy {
     this.control.valueChanges
       .pipe(
         takeUntil(this.destroy$),
-        tap(() => this.control.markAsTouched()),
-        filter((value) => {
-          if (value.length === this.dateFormat.replace(/\//g, '').length) {
-            return true;
+        tap((value: string) => {
+          !this.control.touched && this.control.markAsTouched();
+
+          if (value.length !== this.dateFormat.replace(/\//g, '').length) {
+            this.control.setErrors({ invalidDate: true });
+            return;
           }
 
-          this.control.setErrors({ invalidDate: true });
-
-          return false;
-        }),
-        tap((value: string) => {
           const formattedDate = this.getLuxonDate(value);
 
           if (!formattedDate.isValid || formattedDate < this.minDateTime) {
