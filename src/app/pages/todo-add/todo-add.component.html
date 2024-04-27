@@ -1,3 +1,43 @@
 <div class="todo-add">
-  <app-widget [title]="'Todo Add'"></app-widget>
+  <app-widget [title]="'Todo Add'">
+    <form
+      class="todo-add-form"
+      [formGroup]="todoAddForm"
+      (ngSubmit)="onCreateTodo()"
+    >
+      <mat-form-field appearance="outline">
+        <mat-label>Title</mat-label>
+        <textarea
+          matInput
+          [formControl]="this.getFormControl('title')"
+        ></textarea>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Expiration date</mat-label>
+        <input
+          matInput
+          [matDatepicker]="datePicker"
+          [formControl]="this.getFormControl('expirationDate')"
+        />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="datePicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #datePicker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Expiration time</mat-label>
+        <input
+          matInput
+          [ngxTimepicker]="timePicker"
+          [formControl]="this.getFormControl('expirationTime')"
+        />
+        <button matIconSuffix mat-icon-button type="button">
+          <mat-icon>schedule</mat-icon>
+        </button>
+        <ngx-material-timepicker #timePicker></ngx-material-timepicker>
+      </mat-form-field>
+      <button mat-flat-button color="primary">Create</button>
+    </form>
+  </app-widget>
 </div>
