@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { DateTime } from 'luxon';
-import { Subject, takeUntil, tap } from 'rxjs';
+import { Subject, filter, takeUntil, tap } from 'rxjs';
 
 @Component({
   selector: 'form-field-timepicker',
@@ -45,7 +45,15 @@ export class TimepickerComponent implements OnInit, OnDestroy {
     this.control.valueChanges
       .pipe(
         takeUntil(this.destroy$),
-        tap(() => {})
+        filter((value) => value.length === 4),
+        tap((value: string) => {
+          const hours = Number(value.substring(0, 2));
+          const minutes = Number(value.substring(2, 4));
+
+          if (hours < 24 && minutes < 60) return;
+
+          this.control.setErrors({ invalidTime: true });
+        })
       )
       .subscribe();
   }

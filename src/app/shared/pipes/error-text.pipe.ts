@@ -4,6 +4,7 @@ import { ValidationErrors } from '@angular/forms';
 const ERRORS: Record<string, string> = {
   required: 'This field is required',
   invalidDate: 'Incorrect date',
+  invalidTime: 'Incorrect time',
 };
 
 @Pipe({ standalone: true, name: 'errorText' })

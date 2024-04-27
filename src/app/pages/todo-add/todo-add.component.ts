@@ -87,11 +87,11 @@ export class TodoAddComponent implements OnInit {
     const fullDate: string = this.getFormControl('expirationDate').value;
     const fullTime: string = this.getFormControl('expirationTime').value;
 
-    const month = Number(fullDate.slice(0, 2));
-    const day = Number(fullDate.slice(2, 4));
-    const year = Number(fullDate.slice(4));
-    const hour = Number(fullTime.slice(0, 2));
-    const minute = Number(fullTime.slice(2));
+    const month = Number(fullDate.substring(0, 2));
+    const day = Number(fullDate.substring(2, 4));
+    const year = Number(fullDate.substring(4));
+    const hour = Number(fullTime.substring(0, 2))
+    const minute = Number(fullTime.substring(2));
 
     return DateTime.now()
       .set({ month, day, year, hour, minute, second: 0, millisecond: 0 })
