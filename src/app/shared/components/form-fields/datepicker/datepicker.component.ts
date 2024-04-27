@@ -4,11 +4,16 @@ import {
   Component,
   Input,
   OnDestroy,
+  OnInit,
+  ViewChild,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import {
+  MatDatepicker,
+  MatDatepickerInputEvent,
+} from '@angular/material/datepicker';
 import { DateTime } from 'luxon';
-import { Subject } from 'rxjs';
+import { Subject, filter, takeUntil, tap } from 'rxjs';
 
 @Component({
   selector: 'form-field-datepicker',
@@ -16,12 +21,15 @@ import { Subject } from 'rxjs';
   styleUrls: ['./datepicker.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DatepickerComponent implements OnDestroy {
+export class DatepickerComponent implements OnInit, OnDestroy {
   @Input() control: FormControl = new FormControl();
   @Input() label: string = '';
   @Input() placeholder: string = '';
   @Input() mask: string = '';
   @Input() minDateTime: DateTime<boolean> | string = '';
+
+  @ViewChild('datePicker')
+  private datePicker!: MatDatepicker<Date>;
 
   private readonly dateFormat: string = 'MM/dd/yyyy';
 
@@ -33,6 +41,10 @@ export class DatepickerComponent implements OnDestroy {
   }
 
   constructor(private cdRef: ChangeDetectorRef) {}
+
+  ngOnInit(): void {
+    this.subscribeControlValueChanges();
+  }
 
   ngOnDestroy(): void {
     this.destroy$.next();
@@ -46,5 +58,42 @@ export class DatepickerComponent implements OnDestroy {
     this.control.markAsTouched();
     this.control.markAsDirty();
     this.cdRef.markForCheck();
+  }
+
+  private formattedDate(value: string): DateTime<boolean> {
+    const formattedDate = value
+      .split('')
+      .map((number, i) => ([2, 4].includes(i) ? `/${number}` : number))
+      .join('');
+
+    return DateTime.fromFormat(formattedDate, this.dateFormat);
+  }
+
+  private subscribeControlValueChanges(): void {
+    this.control.valueChanges
+      .pipe(
+        takeUntil(this.destroy$),
+        tap(() => this.control.markAsTouched()),
+        filter((value) => {
+          if (value.length === this.dateFormat.replace(/\//g, '').length) {
+            return true;
+          }
+
+          this.control.setErrors({ invalidDate: true });
+
+          return false;
+        }),
+        tap((value: string) => {
+          const formattedDate = this.formattedDate(value);
+
+          if (!formattedDate.isValid || formattedDate < this.minDateTime) {
+            this.control.setErrors({ invalidDate: true });
+            return;
+          }
+
+          this.datePicker.select(formattedDate.toJSDate());
+        })
+      )
+      .subscribe();
   }
 }

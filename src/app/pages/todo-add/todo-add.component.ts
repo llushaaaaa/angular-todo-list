@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -36,7 +41,11 @@ export class TodoAddComponent implements OnInit {
 
   public todayDate = DateTime.local();
 
-  constructor(private fb: FormBuilder, private todosService: TodosService) {}
+  constructor(
+    private fb: FormBuilder,
+    private todosService: TodosService,
+    private cdRef: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.initForm();
@@ -47,6 +56,11 @@ export class TodoAddComponent implements OnInit {
   }
 
   public onCreateTodo(): void {
+    if (this.todoAddForm.invalid) {
+      this.todoAddForm.markAllAsTouched();
+      return;
+    }
+
     const todo: ITodo = {
       id: crypto.randomUUID(),
       title: this.getFormControl('title').value,
