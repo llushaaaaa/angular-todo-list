@@ -1,7 +1,7 @@
 export interface ITodo {
+  id: string;
   title: string;
-  experationDate: string;
-  experationTime: string;
-  isFavorite: boolean;
+  favorite: boolean;
   createAt: string;
+  expirationAt: string;
 }

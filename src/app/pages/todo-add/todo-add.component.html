@@ -21,7 +21,10 @@
         [placeholder]="'09:00'"
         [mask]="'00:00'"
       ></form-field-timepicker>
-      <app-button [text]="'Create'"></app-button>
+      <app-button
+        [text]="'Create'"
+        [disabled]="todoAddForm.invalid"
+      ></app-button>
     </form>
   </app-widget>
 </div>

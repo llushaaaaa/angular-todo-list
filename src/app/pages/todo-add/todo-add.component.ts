@@ -14,6 +14,7 @@ import { TodosService } from '@services/todos.service';
 import { DateTime } from 'luxon';
 import { FormFieldsModule } from '@shared/components/form-fields/form-fields.module';
 import { ButtonComponent } from '@shared/components/button/button.component';
+import { ITodo } from '@interfaces/todo.interface';
 
 @Component({
   selector: 'app-todo-add',
@@ -46,14 +47,15 @@ export class TodoAddComponent implements OnInit {
   }
 
   public onCreateTodo(): void {
-    // const todo: ITodo = {
-    //   ...this.todoAddForm.value,
-    //   experationDate:
-    // };
-
-    console.log(this.todoAddForm.get('expirationDate'));
-
-    // this.todosService.addTodo(todo);
+    const todo: ITodo = {
+      id: crypto.randomUUID(),
+      title: this.getFormControl('title').value,
+      favorite: false,
+      expirationAt: this.getExpirationDate(),
+      createAt: DateTime.now().toISO(),
+    };
+    
+    this.todosService.addTodo(todo);
   }
 
   private initForm(): void {
@@ -65,5 +67,20 @@ export class TodoAddComponent implements OnInit {
       expirationDate: this.fb.control('', Validators.required),
       expirationTime: this.fb.control('', Validators.required),
     });
+  }
+
+  private getExpirationDate(): string {
+    const fullDate: string = this.getFormControl('expirationDate').value;
+    const fullTime: string = this.getFormControl('expirationTime').value;
+
+    const month = Number(fullDate.slice(0, 2));
+    const day = Number(fullDate.slice(2, 4));
+    const year = Number(fullDate.slice(4));
+    const hour = Number(fullTime.slice(0, 2));
+    const minute = Number(fullTime.slice(2));
+
+    return DateTime.now()
+      .set({ month, day, year, hour, minute, second: 0, millisecond: 0 })
+      .toISO();
   }
 }

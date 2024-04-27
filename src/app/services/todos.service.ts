@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ITodo } from '@interfaces/todo.interface';
 import { StorageMap } from '@ngx-pwa/local-storage';
+import { DateTime } from 'luxon';
 import { BehaviorSubject, Observable, delay, tap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
@@ -23,15 +24,16 @@ export class TodosService {
 
   public initializeTodos(): void {
     this.storage
-      .get<ITodo[]>('todos', { type: 'array' })
-      .pipe(tap((todos) => (this.todos = todos as ITodo[])))
+      .get('todos')
+      .pipe(tap((todos) => (this.todos = (todos ?? []) as ITodo[])))
       .subscribe();
   }
 
   public addTodo(todo: ITodo): void {
     const newTodos = [...this.todos, todo] as ITodo[];
-    this.storage.set('todos', newTodos).subscribe();
+
     this.todos = newTodos;
+    this.storage.set('todos', newTodos).subscribe();
   }
 
   public removeTodo(todoId: string): void {}
