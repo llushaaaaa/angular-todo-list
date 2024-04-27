@@ -9,6 +9,7 @@ import { HeaderComponent } from './layouts/header/header.component';
 import { Subject, filter, takeUntil } from 'rxjs';
 import { ETitles } from '@enums/titles.enum';
 import { ERoutes } from '@enums/routers.enum';
+import { TodosService } from '@services/todos.service';
 
 const TITLES: Record<ERoutes, ETitles> = {
   [ERoutes.LIST]: ETitles.TODO_LIST,
@@ -29,10 +30,11 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private todosServicedo: TodosService) {}
 
   ngOnInit(): void {
     this.subscribeRouterEvents();
+    this.todosServicedo.initializeTodos();
   }
 
   ngOnDestroy(): void {

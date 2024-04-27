@@ -1,0 +1,21 @@
+<mat-form-field appearance="outline" class="form-field-timepicker">
+  <mat-label>{{ label }}</mat-label>
+  <input
+    matInput
+    [ngxTimepicker]="timePicker"
+    [formControl]="control"
+    [placeholder]="placeholder"
+  />
+  <ngx-material-timepicker-toggle
+    matIconSuffix
+    [for]="timePicker"
+  ></ngx-material-timepicker-toggle>
+  <ngx-material-timepicker
+    #timePicker
+    [theme]="{
+      container: { bodyBackgroundColor: '#d7e3ff', buttonColor: '#3f51b5' },
+      dial: { dialBackgroundColor: '#3f51b5' },
+      clockFace: { clockHandColor: '#3f51b5' }
+    }"
+  ></ngx-material-timepicker>
+</mat-form-field>

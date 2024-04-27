@@ -7,14 +7,13 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { WidgetComponent } from '@components/widget/widget.component';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
-import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
+import { TodosService } from '@services/todos.service';
+import { DateTime } from 'luxon';
+import { FormFieldsModule } from '@shared/components/form-fields/form-fields.module';
+import { ButtonComponent } from '@shared/components/button/button.component';
 
 @Component({
   selector: 'app-todo-add',
@@ -23,22 +22,20 @@ import { MatIconModule } from '@angular/material/icon';
   standalone: true,
   imports: [
     WidgetComponent,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatDatepickerModule,
-    NgxMaterialTimepickerModule,
     MatIconModule,
     FormsModule,
     ReactiveFormsModule,
+    FormFieldsModule,
+    ButtonComponent,
   ],
-  providers: [provideNativeDateAdapter()],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TodoAddComponent implements OnInit {
   public todoAddForm = new FormGroup<any>({});
 
-  constructor(private fb: FormBuilder) {}
+  public today = DateTime.now();
+
+  constructor(private fb: FormBuilder, private todosService: TodosService) {}
 
   ngOnInit(): void {
     this.initForm();
@@ -49,7 +46,14 @@ export class TodoAddComponent implements OnInit {
   }
 
   public onCreateTodo(): void {
-    console.log(this.todoAddForm.value);
+    // const todo: ITodo = {
+    //   ...this.todoAddForm.value,
+    //   experationDate:
+    // };
+
+    console.log(this.todoAddForm.get('expirationDate'));
+
+    // this.todosService.addTodo(todo);
   }
 
   private initForm(): void {

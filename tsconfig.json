@@ -25,6 +25,7 @@
       "@interfaces/*": ["app/interfaces/*"],
       "@services/*": ["app/services/*"],
       "@enums/*": ["app/enums/*"],
+      "@shared/*": ["app/shared/*"]
     }
   },
   "angularCompilerOptions": {
