@@ -1,0 +1,14 @@
+.app {
+  &-container {
+    max-width: 75rem;
+    margin: 0 auto;
+    padding: 0 0.9375rem;
+    margin-top: 3.75rem;
+  }
+
+  &__title {
+    text-align: center;
+    font-size: 1.625rem;
+    margin: 0 0 1.25rem;
+  }
+}
