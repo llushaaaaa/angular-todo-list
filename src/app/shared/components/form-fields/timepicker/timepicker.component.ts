@@ -5,6 +5,7 @@ import {
   Input,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { DateTime } from 'luxon';
 
 @Component({
   selector: 'form-field-timepicker',
@@ -17,6 +18,7 @@ export class TimepickerComponent {
   @Input() label: string = '';
   @Input() placeholder: string = '';
   @Input() mask: string = '';
+  @Input() minDateTime: DateTime<boolean> | string = '';
 
   constructor(private cdRef: ChangeDetectorRef) {}
 

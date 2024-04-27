@@ -34,7 +34,7 @@ import { ITodo } from '@interfaces/todo.interface';
 export class TodoAddComponent implements OnInit {
   public todoAddForm = new FormGroup<any>({});
 
-  public today = DateTime.now();
+  public todayDate = DateTime.local();
 
   constructor(private fb: FormBuilder, private todosService: TodosService) {}
 
@@ -54,7 +54,7 @@ export class TodoAddComponent implements OnInit {
       expirationAt: this.getExpirationDate(),
       createAt: DateTime.now().toISO(),
     };
-    
+
     this.todosService.addTodo(todo);
   }
 

@@ -8,6 +8,7 @@
   <input
     type="hidden"
     [matDatepicker]="datePicker"
+    [min]="minDate"
     (dateChange)="setDate($event)" />
   <mat-datepicker-toggle
     matIconSuffix

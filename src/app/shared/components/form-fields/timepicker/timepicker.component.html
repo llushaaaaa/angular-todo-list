@@ -6,7 +6,12 @@
     [mask]="mask"
     [placeholder]="placeholder"
   />
-  <input type="hidden" [ngxTimepicker]="timePicker" [format]="24" />
+  <input
+    type="hidden"
+    [ngxTimepicker]="timePicker"
+    [format]="24"
+    [min]="minDateTime"
+  />
   <ngx-material-timepicker-toggle
     matIconSuffix
     [for]="timePicker"

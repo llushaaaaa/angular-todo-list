@@ -14,12 +14,14 @@
         [control]="this.getFormControl('expirationDate')"
         [placeholder]="'MM/DD/YYYY'"
         [mask]="'00/00/0000'"
+        [minDateTime]="todayDate"
       ></form-field-datepicker>
       <form-field-timepicker
         [label]="'Expiration time'"
         [control]="this.getFormControl('expirationTime')"
         [placeholder]="'09:00'"
         [mask]="'00:00'"
+        [minDateTime]="todayDate"
       ></form-field-timepicker>
       <app-button
         [text]="'Create'"

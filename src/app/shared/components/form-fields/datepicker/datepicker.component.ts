@@ -19,8 +19,14 @@ export class DatepickerComponent {
   @Input() label: string = '';
   @Input() placeholder: string = '';
   @Input() mask: string = '';
+  @Input() minDateTime: DateTime<boolean> | string = '';
 
   private readonly dateFormat: string = 'MM/dd/yyyy';
+
+  public get minDate(): Date | null {
+    if (!this.minDateTime) return null;
+    return new Date(this.minDateTime.toString());
+  }
 
   constructor(private cdRef: ChangeDetectorRef) {}
 
