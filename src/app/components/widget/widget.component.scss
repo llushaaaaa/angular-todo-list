@@ -1,0 +1,20 @@
+$padding: 0.9375rem 0.625rem;
+
+.widget {
+  width: 100%;
+  border: 0.0625rem solid var(--color-dark-blue);
+  border-radius: var(--border-radius);
+
+  &__title {
+    font-size: 1.125rem;
+    color: var(--color-dark-blue);
+    background-color: var(--color-primary);
+    padding: $padding;
+    border-top-left-radius: var(--border-radius);
+    border-top-right-radius: var(--border-radius);
+  }
+
+  &-content {
+    padding: $padding;
+  }
+}
