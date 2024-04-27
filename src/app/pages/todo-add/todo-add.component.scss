@@ -3,4 +3,8 @@
     display: flex;
     flex-direction: column;
   }
+
+  .timepicker-icon {
+    pointer-events: none;
+  }
 }
