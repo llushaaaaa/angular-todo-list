@@ -3,9 +3,11 @@ import {
   ChangeDetectorRef,
   Component,
   Input,
+  OnDestroy,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { DateTime } from 'luxon';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'form-field-timepicker',
@@ -13,14 +15,21 @@ import { DateTime } from 'luxon';
   styleUrls: ['./timepicker.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TimepickerComponent {
+export class TimepickerComponent implements OnDestroy {
   @Input() control: FormControl = new FormControl();
   @Input() label: string = '';
   @Input() placeholder: string = '';
   @Input() mask: string = '';
   @Input() minDateTime: DateTime<boolean> | string = '';
 
+  private destroy$ = new Subject<void>();
+
   constructor(private cdRef: ChangeDetectorRef) {}
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   public setTime(time: string): void {
     this.control.setValue(time);

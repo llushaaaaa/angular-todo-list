@@ -2,5 +2,10 @@
   &-form {
     display: flex;
     flex-direction: column;
+    row-gap: 1.875rem;
+  }
+
+  &__button {
+    margin-top: 0.9375rem;
   }
 }

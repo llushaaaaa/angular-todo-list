@@ -1,18 +1,26 @@
-<mat-form-field appearance="outline" class="form-field-datepicker">
-  <mat-label>{{ label }}</mat-label>
-  <input
-    matInput
-    [formControl]="control"
-    [mask]="mask"
-    [placeholder]="placeholder" />
-  <input
-    type="hidden"
-    [matDatepicker]="datePicker"
-    [min]="minDate"
-    (dateChange)="setDate($event)" />
-  <mat-datepicker-toggle
-    matIconSuffix
-    [for]="datePicker"
-  ></mat-datepicker-toggle>
-  <mat-datepicker #datePicker></mat-datepicker
-></mat-form-field>
+<div class="form-field-datepicker">
+  <mat-form-field appearance="outline">
+    <mat-label>{{ label }}</mat-label>
+    <input
+      matInput
+      [formControl]="control"
+      [mask]="mask"
+      [placeholder]="placeholder" />
+    <input
+      type="hidden"
+      [matDatepicker]="datePicker"
+      [min]="minDate"
+      (dateChange)="setDate($event)" />
+    <mat-datepicker-toggle
+      matIconSuffix
+      [for]="datePicker"
+    ></mat-datepicker-toggle>
+    <mat-datepicker #datePicker></mat-datepicker
+  ></mat-form-field>
+  <span
+    *ngIf="control.invalid && control.touched"
+    class="form-field-datepicker__error"
+  >
+    {{ control.errors | errorText }}
+  </span>
+</div>
