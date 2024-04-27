@@ -8,6 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 @NgModule({
   declarations: [TextareaComponent, DatepickerComponent, TimepickerComponent],
@@ -16,9 +17,10 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
     MatInputModule,
     MatDatepickerModule,
     NgxMaterialTimepickerModule,
+    NgxMaskDirective,
     ReactiveFormsModule,
   ],
-  providers: [provideNativeDateAdapter()],
+  providers: [provideNativeDateAdapter(), provideNgxMask()],
   exports: [TextareaComponent, DatepickerComponent, TimepickerComponent],
 })
 export class FormFieldsModule {}

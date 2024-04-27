@@ -13,11 +13,13 @@
         [label]="'Expiration date'"
         [control]="this.getFormControl('expirationDate')"
         [placeholder]="'MM/DD/YYYY'"
+        [mask]="'00/00/0000'"
       ></form-field-datepicker>
       <form-field-timepicker
         [label]="'Expiration time'"
         [control]="this.getFormControl('expirationTime')"
-        [placeholder]="'09:00 AM'"
+        [placeholder]="'09:00'"
+        [mask]="'00:00'"
       ></form-field-timepicker>
       <app-button [text]="'Create'"></app-button>
     </form>

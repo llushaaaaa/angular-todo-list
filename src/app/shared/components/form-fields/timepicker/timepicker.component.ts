@@ -10,4 +10,5 @@ export class TimepickerComponent {
   @Input() control: FormControl = new FormControl();
   @Input() label: string = '';
   @Input() placeholder: string = '';
+  @Input() mask: string = '';
 }

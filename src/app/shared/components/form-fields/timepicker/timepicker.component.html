@@ -2,10 +2,11 @@
   <mat-label>{{ label }}</mat-label>
   <input
     matInput
-    [ngxTimepicker]="timePicker"
     [formControl]="control"
+    [mask]="mask"
     [placeholder]="placeholder"
   />
+  <input type="hidden" [ngxTimepicker]="timePicker" [format]="24" />
   <ngx-material-timepicker-toggle
     matIconSuffix
     [for]="timePicker"
