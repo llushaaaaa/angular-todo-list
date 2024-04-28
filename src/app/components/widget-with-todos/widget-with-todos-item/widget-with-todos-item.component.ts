@@ -17,7 +17,7 @@ import { TodosService } from '@services/todos.service';
 import { SkeletonComponent } from '@shared/components/skeleton/skeleton.component';
 import { calculateTimeRemaining } from '@shared/utils/calculate-time-remaining.util';
 import { DateTime } from 'luxon';
-import { interval, map, takeWhile } from 'rxjs';
+import { interval, map, takeWhile, tap } from 'rxjs';
 
 @Component({
   selector: 'app-widget-with-todos-item',
@@ -37,6 +37,7 @@ export class WidgetWithTodosItemComponent implements OnInit {
 
   public exprirationAt: string = '00m 00s';
   public isExprirationAtLoading: boolean = true;
+  public isRemainingTimeLessHour: boolean = false;
 
   public get expirationAtColumnName(): string {
     return this.isTodayTodo ? 'Time Left' : 'Expiration';
@@ -73,6 +74,10 @@ export class WidgetWithTodosItemComponent implements OnInit {
     interval(1000)
       .pipe(
         map(() => calculateTimeRemaining(this.todoExpirationDate)),
+        tap((time) => {
+          if (time.indexOf('h') !== -1) return;
+          this.isRemainingTimeLessHour = true;
+        }),
         takeWhile((time) => time !== '00m 00s')
       )
       .subscribe((time) => {

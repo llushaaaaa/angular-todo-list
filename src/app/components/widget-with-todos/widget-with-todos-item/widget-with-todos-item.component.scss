@@ -43,10 +43,15 @@
       left: 50%;
       transform: translateX(-50%);
       font-weight: 500;
+      color: initial;
     }
   }
 
   &__expiration-at {
+    &.less-hour {
+      color: var(--color-red);
+    }
+
     app-skeleton {
       display: block;
       width: 4.0625rem;

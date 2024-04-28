@@ -8,7 +8,10 @@
       {{ todo.createAt | date }}
     </div>
     <!-- Expiration At -->
-    <div class="widget-with-todos-item__expiration-at">
+    <div
+      class="widget-with-todos-item__expiration-at"
+      [class.less-hour]="isRemainingTimeLessHour"
+    >
       <span *ngIf="isFirstItem">{{ expirationAtColumnName }}</span>
       <ng-container *ngIf="!isExprirationAtLoading; else skeleton">
         {{ exprirationAt }}
