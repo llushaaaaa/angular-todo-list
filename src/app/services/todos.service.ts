@@ -2,15 +2,13 @@ import { Injectable } from '@angular/core';
 import { ITodo } from '@interfaces/todo.interface';
 import { StorageMap } from '@ngx-pwa/local-storage';
 import { DateTime } from 'luxon';
-import { BehaviorSubject, Observable, delay, take, tap } from 'rxjs';
+import { BehaviorSubject, Observable, take, tap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class TodosService {
   public todos$ = new BehaviorSubject<ITodo[]>([]);
   public todayTodos$ = new BehaviorSubject<ITodo[]>([]);
   public exceptTodayTodos$ = new BehaviorSubject<ITodo[]>([]);
-
-  private currentDay = DateTime.local();
 
   public get todos(): ITodo[] {
     return this.todos$.getValue();
@@ -72,13 +70,15 @@ export class TodosService {
   }
 
   public filterTodos = (): void => {
+    const currentDay = DateTime.local();
+
     const todayTodos: ITodo[] = [];
     const exceptTodayTodos: ITodo[] = [];
 
     this.todos.forEach((todo) => {
       const todoExprirationAt = DateTime.fromISO(todo.expirationAt);
 
-      this.currentDay.hasSame(todoExprirationAt, 'day')
+      currentDay.hasSame(todoExprirationAt, 'day')
         ? todayTodos.push(todo)
         : exceptTodayTodos.push(todo);
     });

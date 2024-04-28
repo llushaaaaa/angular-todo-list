@@ -20,7 +20,13 @@ import { ITodo } from '@interfaces/todo.interface';
 })
 export class WidgetWithTodosItemComponent {
   @Input() todo: ITodo | null = null;
+  @Input() isTodayTodo: boolean = true;
+  @Input() isFirstItem: boolean = true;
 
   @Output() favorite = new EventEmitter<string>();
   @Output() remove = new EventEmitter<string>();
+
+  public get expirationAtColumnName(): string {
+    return this.isTodayTodo ? 'Time Left' : 'Expiration';
+  }
 }

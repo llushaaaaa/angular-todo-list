@@ -1,14 +1,16 @@
-<div *ngIf="todo" class="widget-with-todos-item">
+<div *ngIf="todo" class="widget-with-todos-item" [class.first]="isFirstItem">
   <!-- Title -->
   <div class="widget-with-todos-item__title">{{ todo.title }}</div>
   <div class="widget-with-todos-item-wrapper">
     <!-- Create At -->
     <div class="widget-with-todos-item__create-at">
       {{ todo.createAt | date }}
+      <span *ngIf="isFirstItem">Create At</span>
     </div>
     <!-- Expiration At -->
     <div class="widget-with-todos-item__expiration-at">
       {{ todo.expirationAt | date }}
+      <span *ngIf="isFirstItem">{{ expirationAtColumnName }}</span>
     </div>
     <!-- Favorite Icon Button -->
     <button

@@ -3,6 +3,8 @@
     @for (todo of todosService.todayTodos$ | async; track todo.id) {
     <app-widget-with-todos-item
       [todo]="todo"
+      [isFirstItem]="$index === 0"
+      [isTodayTodo]="true"
       (remove)="removeTodo(todo)"
       (favorite)="todosService.toggleFavoriteTodo(todo.id)"
     ></app-widget-with-todos-item>
@@ -12,6 +14,8 @@
     @for (todo of todosService.exceptTodayTodos$ | async; track todo.id) {
     <app-widget-with-todos-item
       [todo]="todo"
+      [isFirstItem]="$index === 0"
+      [isTodayTodo]="false"
       (remove)="removeTodo(todo)"
       (favorite)="todosService.toggleFavoriteTodo(todo.id)"
     ></app-widget-with-todos-item>

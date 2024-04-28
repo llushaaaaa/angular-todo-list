@@ -3,10 +3,14 @@
   align-items: center;
   justify-content: space-between;
   border: 0.0625rem solid var(--color-secondary);
-  border-radius: var(--border-radius);
-  padding: 0.3125rem 0.625rem;
+  border-top: none;
+  padding: 0.125rem 0.625rem;
   column-gap: 0.625rem;
   margin-bottom: 0.9375rem;
+
+  &.first {
+    border-top: 0.0625rem solid var(--color-secondary);
+  }
 
   &:last-child {
     margin-bottom: 0;
@@ -29,7 +33,16 @@
 
   &__create-at,
   &__expiration-at {
+    position: relative;
     font-weight: 500;
     white-space: nowrap;
+
+    span {
+      position: absolute;
+      top: -2.625rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-weight: 500;
+    }
   }
 }

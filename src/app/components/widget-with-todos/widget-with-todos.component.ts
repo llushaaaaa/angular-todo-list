@@ -35,7 +35,7 @@ export class WidgetWithTodosComponent {
       width: '250px',
       enterAnimationDuration: '150ms',
       exitAnimationDuration: '150ms',
-      autoFocus: false
+      autoFocus: false,
     });
 
     dialogRef

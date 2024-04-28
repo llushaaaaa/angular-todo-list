@@ -4,8 +4,6 @@
   row-gap: 1.875rem;
 
   ::ng-deep .widget-content {
-    display: flex;
-    flex-direction: column;
-    row-gap: 0.625rem;
+    padding-top: 2.1875rem;
   }
 }
