@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -10,6 +11,7 @@ import { Subject, filter, take, takeUntil } from 'rxjs';
 import { ETitles } from '@enums/titles.enum';
 import { ERoutes } from '@enums/routers.enum';
 import { TodosService } from '@services/todos.service';
+import { ButtonComponent } from '@shared/components/button/button.component';
 
 const TITLES: Record<ERoutes, ETitles> = {
   [ERoutes.LIST]: ETitles.TODO_LIST,
@@ -20,13 +22,15 @@ const TITLES: Record<ERoutes, ETitles> = {
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent],
+  imports: [CommonModule, RouterOutlet, HeaderComponent, ButtonComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit, OnDestroy {
-  public title = 'Todo List';
+  public title = ETitles.TODO_LIST;
+
+  public ETitles = ETitles;
 
   private destroy$ = new Subject<void>();
 
@@ -40,6 +44,10 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  public goToTodoList(): void {
+    this.router.navigate(['list']);
   }
 
   private subscribeRouterEvents(): void {

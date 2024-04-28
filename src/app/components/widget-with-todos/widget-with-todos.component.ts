@@ -1,10 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { WidgetComponent } from '@components/widget/widget.component';
 import { WidgetWithTodosItemComponent } from './widget-with-todos-item/widget-with-todos-item.component';
 import { TodosService } from '@services/todos.service';
@@ -17,10 +12,8 @@ import { TodosService } from '@services/todos.service';
   styleUrls: ['./widget-with-todos.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WidgetWithTodosComponent implements OnInit {
+export class WidgetWithTodosComponent {
   @Input() filter: 'all' | 'favorite' = 'all';
 
   constructor(public todosService: TodosService) {}
-
-  ngOnInit(): void {}
 }

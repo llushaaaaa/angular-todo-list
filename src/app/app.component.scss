@@ -6,9 +6,17 @@
     margin-top: 3.75rem;
   }
 
-  &__title {
+  &-title {
+    position: relative;
     text-align: center;
     font-size: 1.625rem;
     margin: 0 0 1.25rem;
+
+    app-button {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+    }
   }
 }
