@@ -11,12 +11,18 @@ import { TodosService } from '@services/todos.service';
 import { MatDialog } from '@angular/material/dialog';
 import { WidgetWithTodosRemoveDialogComponent } from './widget-with-todos-remove-dialog/widget-with-todos-remove-dialog.component';
 import { ITodo } from '@interfaces/todo.interface';
-import { filter, finalize, switchMap, tap } from 'rxjs';
+import { filter, finalize, tap } from 'rxjs';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-widget-with-todos',
   standalone: true,
-  imports: [CommonModule, WidgetComponent, WidgetWithTodosItemComponent],
+  imports: [
+    CommonModule,
+    WidgetComponent,
+    WidgetWithTodosItemComponent,
+    MatProgressSpinnerModule,
+  ],
   templateUrl: './widget-with-todos.component.html',
   styleUrls: ['./widget-with-todos.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -25,7 +31,7 @@ export class WidgetWithTodosComponent {
   @Input() filter: 'all' | 'favorite' = 'all';
 
   constructor(
-    public todosService: TodosService,
+    public readonly todosService: TodosService,
     private dialog: MatDialog,
     private cdRef: ChangeDetectorRef
   ) {}

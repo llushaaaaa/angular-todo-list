@@ -4,9 +4,17 @@ import { ITodo } from '@interfaces/todo.interface';
 import { StorageMap } from '@ngx-pwa/local-storage';
 import { isToday } from '@shared/utils/is-today.util';
 import { DateTime } from 'luxon';
-import { BehaviorSubject, delay, take, tap, finalize } from 'rxjs';
+import {
+  BehaviorSubject,
+  delay,
+  take,
+  tap,
+  finalize,
+  Observable,
+  debounceTime,
+} from 'rxjs';
 
-const DELAY_MS = 400;
+const DELAY_MS = 700;
 
 @Injectable({ providedIn: 'root' })
 export class TodosService {
@@ -14,7 +22,9 @@ export class TodosService {
   public todayTodos$ = new BehaviorSubject<ITodo[]>([]);
   public exceptTodayTodos$ = new BehaviorSubject<ITodo[]>([]);
 
-  public disabledButtons$ = new BehaviorSubject<boolean>(false);
+  public todosLoading$ = new BehaviorSubject<boolean>(true);
+  public addTodoLoading$ = new BehaviorSubject<boolean>(false);
+  public removeTodoLoading$ = new BehaviorSubject<boolean>(false);
 
   public get todos(): ITodo[] {
     return this.todos$.getValue();
@@ -26,8 +36,9 @@ export class TodosService {
     this.storage
       .get('todos')
       .pipe(
-        delay(DELAY_MS),
         take(1),
+        delay(DELAY_MS),
+        finalize(() => this.todosLoading$.next(false)),
         tap((todos) => this.todos$.next((todos ?? []) as ITodo[])),
         tap(this.filterTodos)
       )
@@ -35,12 +46,23 @@ export class TodosService {
   }
 
   public addTodo(todo: ITodo): void {
+    this.addTodoLoading$.next(true);
+
     const todos = [...this.todos, todo] as ITodo[];
 
-    this.setTodosInLocalStorage(todos, '/list');
+    this.setTodosInLocalStorage(todos)
+      .pipe(
+        finalize(() => {
+          this.addTodoLoading$.next(false);
+          this.router.navigate(['/list']);
+        })
+      )
+      .subscribe();
   }
 
   public removeTodo(todoId: string): void {
+    this.removeTodoLoading$.next(true);
+
     const todoIndex = this.todos.findIndex((todo) => todo.id === todoId);
 
     const todos = [
@@ -48,7 +70,9 @@ export class TodosService {
       ...this.todos.slice(todoIndex, this.todos.length - 1),
     ];
 
-    this.setTodosInLocalStorage(todos);
+    this.setTodosInLocalStorage(todos)
+      .pipe(finalize(() => this.removeTodoLoading$.next(false)))
+      .subscribe();
   }
 
   public toggleFavoriteTodo(todoId: string): void {
@@ -61,7 +85,7 @@ export class TodosService {
       ...this.todos.slice(todoIndex, this.todos.length - 1),
     ];
 
-    this.setTodosInLocalStorage(todos);
+    this.setTodosInLocalStorage(todos).pipe(debounceTime(300)).subscribe();
   }
 
   private filterTodos = (): void => {
@@ -80,22 +104,11 @@ export class TodosService {
     this.exceptTodayTodos$.next(exceptTodayTodos);
   };
 
-  private setTodosInLocalStorage(todos: ITodo[], route?: string): void {
-    this.disabledButtons$.next(true);
-
+  private setTodosInLocalStorage(todos: ITodo[]): Observable<void> {
     this.todos$.next(todos);
 
-    this.storage
+    return this.storage
       .set('todos', todos)
-      .pipe(
-        take(1),
-        delay(DELAY_MS),
-        tap(this.filterTodos),
-        finalize(() => {
-          this.disabledButtons$.next(false);
-          route && this.router.navigate([route]);
-        })
-      )
-      .subscribe();
+      .pipe(take(1), delay(DELAY_MS), tap(this.filterTodos));
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { WidgetWithTodosComponent } from '@components/widget-with-todos/widget-with-todos.component';
 
 @Component({
@@ -7,9 +7,6 @@ import { WidgetWithTodosComponent } from '@components/widget-with-todos/widget-w
   imports: [WidgetWithTodosComponent],
   templateUrl: './todo-list.component.html',
   styleUrls: ['./todo-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TodoListComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit() {}
-}
+export class TodoListComponent {}

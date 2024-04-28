@@ -6,4 +6,9 @@
   ::ng-deep .widget-content {
     padding-top: 2.1875rem;
   }
+
+  &__spinner {
+    margin: 0 auto;
+    margin-top: 40px;
+  }
 }

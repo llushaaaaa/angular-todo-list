@@ -26,8 +26,12 @@
       ></form-field-timepicker>
       <app-button
         class="todo-add__button"
-        [text]="'Create'"
-        [disabled]="todoAddForm.invalid"
+        [text]="
+          (todosService.addTodoLoading$ | async) ? 'Creating...' : 'Create'
+        "
+        [disabled]="
+          (todosService.addTodoLoading$ | async) || todoAddForm.invalid
+        "
       ></app-button>
     </form>
   </app-widget>

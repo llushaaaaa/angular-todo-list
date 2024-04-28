@@ -23,6 +23,7 @@ import { ITodo } from '@interfaces/todo.interface';
 import { getExpirationDate } from '@shared/utils/get-expiration-date.util';
 import { Subject, finalize, takeUntil, tap } from 'rxjs';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-todo-add',
@@ -30,6 +31,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./todo-add.component.scss'],
   standalone: true,
   imports: [
+    CommonModule,
     WidgetComponent,
     MatIconModule,
     FormsModule,
@@ -52,7 +54,10 @@ export class TodoAddComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
 
-  constructor(private fb: FormBuilder, private todosService: TodosService) {}
+  constructor(
+    public readonly todosService: TodosService,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.initForm();

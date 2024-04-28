@@ -46,7 +46,7 @@ export class WidgetWithTodosItemComponent implements OnInit {
   }
 
   constructor(
-    public todosService: TodosService,
+    public readonly todosService: TodosService,
     private cdRef: ChangeDetectorRef
   ) {}
 

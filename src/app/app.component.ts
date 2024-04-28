@@ -12,6 +12,7 @@ import { ETitles } from '@enums/titles.enum';
 import { ERoutes } from '@enums/routers.enum';
 import { TodosService } from '@services/todos.service';
 import { ButtonComponent } from '@shared/components/button/button.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 const TITLES: Record<ERoutes, ETitles> = {
   [ERoutes.LIST]: ETitles.TODO_LIST,
@@ -22,7 +23,13 @@ const TITLES: Record<ERoutes, ETitles> = {
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, HeaderComponent, ButtonComponent],
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    HeaderComponent,
+    ButtonComponent,
+    MatProgressSpinnerModule,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -34,11 +41,11 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
 
-  constructor(private router: Router, private todosServicedo: TodosService) {}
+  constructor(private todosService: TodosService, private router: Router) {}
 
   ngOnInit(): void {
     this.subscribeRouterEvents();
-    this.todosServicedo.initializeTodos();
+    this.todosService.initializeTodos();
   }
 
   ngOnDestroy(): void {
