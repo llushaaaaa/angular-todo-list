@@ -10,7 +10,12 @@
     <!-- Expiration At -->
     <div class="widget-with-todos-item__expiration-at">
       <span *ngIf="isFirstItem">{{ expirationAtColumnName }}</span>
-      {{ exprirationAt }}
+      <ng-container *ngIf="!isExprirationAtLoading; else skeleton">
+        {{ exprirationAt }}
+      </ng-container>
+      <ng-template #skeleton>
+        <app-skeleton></app-skeleton>
+      </ng-template>
     </div>
     <!-- Favorite Icon Button -->
     <button

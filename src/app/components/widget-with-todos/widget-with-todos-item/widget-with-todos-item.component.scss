@@ -45,4 +45,12 @@
       font-weight: 500;
     }
   }
+
+  &__expiration-at {
+    app-skeleton {
+      display: block;
+      width: 4.0625rem;
+      height: 1.25rem;
+    }
+  }
 }

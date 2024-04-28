@@ -1,0 +1,17 @@
+@keyframes pulse {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.3;
+  }
+}
+
+.skeleton {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-primary);
+  animation: pulse infinite alternate 1.5s;
+  border-radius: var(--border-radius);
+}
