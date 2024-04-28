@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { ITodo } from '@interfaces/todo.interface';
@@ -10,6 +16,7 @@ import { ITodo } from '@interfaces/todo.interface';
   imports: [CommonModule, MatIconModule, MatButtonModule],
   templateUrl: './widget-with-todos-item.component.html',
   styleUrls: ['./widget-with-todos-item.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WidgetWithTodosItemComponent {
   @Input() todo: ITodo | null = null;

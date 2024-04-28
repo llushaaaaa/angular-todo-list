@@ -1,12 +1,20 @@
 <div class="widget-with-todos">
   <app-widget [title]="'Today Todo List'">
     @for (todo of todosService.todayTodos$ | async; track todo.id) {
-    <app-widget-with-todos-item [todo]="todo"></app-widget-with-todos-item>
+    <app-widget-with-todos-item
+      [todo]="todo"
+      (remove)="removeTodo(todo)"
+      (favorite)="todosService.toggleFavoriteTodo(todo.id)"
+    ></app-widget-with-todos-item>
     }
   </app-widget>
   <app-widget [title]="'My Todo List'">
     @for (todo of todosService.exceptTodayTodos$ | async; track todo.id) {
-    <app-widget-with-todos-item [todo]="todo"></app-widget-with-todos-item>
+    <app-widget-with-todos-item
+      [todo]="todo"
+      (remove)="removeTodo(todo)"
+      (favorite)="todosService.toggleFavoriteTodo(todo.id)"
+    ></app-widget-with-todos-item>
     }
   </app-widget>
 </div>

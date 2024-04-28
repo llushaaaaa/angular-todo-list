@@ -14,7 +14,7 @@
     <button
       class="widget-with-todos-item__favorite"
       mat-icon-button
-      color="primary"
+      [color]="todo.favorite ? 'warn' : 'primary'"
       (click)="favorite.emit(todo.id)"
     >
       <mat-icon>favorite</mat-icon>

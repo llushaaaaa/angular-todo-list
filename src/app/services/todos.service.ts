@@ -12,6 +12,10 @@ export class TodosService {
 
   private currentDay = DateTime.local();
 
+  public get todos(): ITodo[] {
+    return this.todos$.getValue();
+  }
+
   constructor(private storage: StorageMap) {}
 
   public initializeTodos(): void {
@@ -25,23 +29,53 @@ export class TodosService {
       .subscribe();
   }
 
-  public addTodo(todo: ITodo): Observable<undefined> {
-    const newTodos = [...this.todos$.getValue(), todo] as ITodo[];
+  public addTodo(todo: ITodo): Observable<void> {
+    const todos = [...this.todos, todo] as ITodo[];
 
-    this.todos$.next(newTodos);
+    this.todos$.next(todos);
 
-    return this.storage.set('todos', newTodos).pipe(tap(this.filterTodos));
+    return this.storage.set('todos', todos).pipe(tap(this.filterTodos));
   }
 
-  public removeTodo(todoId: string): void {}
+  public removeTodo(todoId: string): void {
+    const todoIndex = this.todos.findIndex((todo) => todo.id === todoId);
 
-  public markFavoriteTodo(todoId: string): void {}
+    const todos = [
+      ...this.todos.slice(0, todoIndex),
+      ...this.todos.slice(todoIndex, this.todos.length - 1),
+    ];
+
+    this.todos$.next(todos);
+
+    this.storage
+      .set('todos', todos)
+      .pipe(take(1), tap(this.filterTodos))
+      .subscribe();
+  }
+
+  public toggleFavoriteTodo(todoId: string): void {
+    const todoIndex = this.todos.findIndex((todo) => todo.id === todoId);
+    const todo = this.todos[todoIndex];
+
+    const todos = [
+      ...this.todos.slice(0, todoIndex),
+      { ...todo, favorite: !todo.favorite },
+      ...this.todos.slice(todoIndex, this.todos.length - 1),
+    ];
+
+    this.todos$.next(todos);
+
+    this.storage
+      .set('todos', todos)
+      .pipe(take(1), tap(this.filterTodos))
+      .subscribe();
+  }
 
   public filterTodos = (): void => {
     const todayTodos: ITodo[] = [];
     const exceptTodayTodos: ITodo[] = [];
 
-    this.todos$.getValue().forEach((todo) => {
+    this.todos.forEach((todo) => {
       const todoExprirationAt = DateTime.fromISO(todo.expirationAt);
 
       this.currentDay.hasSame(todoExprirationAt, 'day')
