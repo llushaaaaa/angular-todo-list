@@ -7,31 +7,33 @@
   </ng-container>
   <ng-template #widgets>
     <app-widget [title]="'Today Todo List'">
-      @if((todosService.todayTodos$ | async)?.length) { @for (todo of
-      todosService.todayTodos$ | async; track todo.id) {
-      <app-widget-with-todos-item
-        [todo]="todo"
-        [isFirstItem]="$index === 0"
-        [isTodayTodo]="true"
-        (remove)="removeTodo(todo)"
-        (favorite)="todosService.toggleFavoriteTodo(todo.id)"
-      ></app-widget-with-todos-item>
-      } } @else {
-      <div class="widget-with-todos__no-items">No todos...</div>
+      @if(todayTodos.length) { 
+        @for (todo of todayTodos; track todo.id) {
+          <app-widget-with-todos-item
+            [todo]="todo"
+            [isFirstItem]="$index === 0"
+            [isTodayTodo]="true"
+            (remove)="removeTodo(todo)"
+            (favorite)="todosService.toggleFavoriteTodo(todo.id)"
+          ></app-widget-with-todos-item>
+        } 
+      } @else {
+        <div class="widget-with-todos__no-items">No todos...</div>
       }
     </app-widget>
     <app-widget [title]="'My Todo List'">
-      @if((todosService.exceptTodayTodos$ | async)?.length) { @for (todo of
-      todosService.exceptTodayTodos$ | async; track todo.id) {
-      <app-widget-with-todos-item
-        [todo]="todo"
-        [isFirstItem]="$index === 0"
-        [isTodayTodo]="false"
-        (remove)="removeTodo(todo)"
-        (favorite)="todosService.toggleFavoriteTodo(todo.id)"
-      ></app-widget-with-todos-item>
-      } } @else {
-      <div class="widget-with-todos__no-items">No todos...</div>
+      @if(exceptTodayTodos.length) { 
+        @for (todo of exceptTodayTodos; track todo.id) {
+          <app-widget-with-todos-item
+            [todo]="todo"
+            [isFirstItem]="$index === 0"
+            [isTodayTodo]="false"
+            (remove)="removeTodo(todo)"
+            (favorite)="todosService.toggleFavoriteTodo(todo.id)"
+          ></app-widget-with-todos-item>
+        } 
+      } @else {
+        <div class="widget-with-todos__no-items">No todos...</div>
       }
     </app-widget>
   </ng-template>
