@@ -7,25 +7,33 @@
   </ng-container>
   <ng-template #widgets>
     <app-widget [title]="'Today Todo List'">
-      @for (todo of todosService.todayTodos$ | async; track todo.id) {
-      <app-widget-with-todos-item
-        [todo]="todo"
-        [isFirstItem]="$index === 0"
-        [isTodayTodo]="true"
-        (remove)="removeTodo(todo)"
-        (favorite)="todosService.toggleFavoriteTodo(todo.id)"
-      ></app-widget-with-todos-item>
-      }
+      @if((todosService.todayTodos$ | async)?.length) { 
+        @for (todo of todosService.todayTodos$ | async; track todo.id) {
+          <app-widget-with-todos-item
+            [todo]="todo"
+            [isFirstItem]="$index === 0"
+            [isTodayTodo]="true"
+            (remove)="removeTodo(todo)"
+            (favorite)="todosService.toggleFavoriteTodo(todo.id)"
+          ></app-widget-with-todos-item>
+        } 
+    } @else { 
+      No items...
+    }
     </app-widget>
     <app-widget [title]="'My Todo List'">
-      @for (todo of todosService.exceptTodayTodos$ | async; track todo.id) {
-      <app-widget-with-todos-item
-        [todo]="todo"
-        [isFirstItem]="$index === 0"
-        [isTodayTodo]="false"
-        (remove)="removeTodo(todo)"
-        (favorite)="todosService.toggleFavoriteTodo(todo.id)"
-      ></app-widget-with-todos-item>
+      @if((todosService.exceptTodayTodos$ | async)?.length) {
+        @for (todo of todosService.exceptTodayTodos$ | async; track todo.id) {
+          <app-widget-with-todos-item
+            [todo]="todo"
+            [isFirstItem]="$index === 0"
+            [isTodayTodo]="false"
+            (remove)="removeTodo(todo)"
+            (favorite)="todosService.toggleFavoriteTodo(todo.id)"
+          ></app-widget-with-todos-item>
+        }
+      } @else {
+        No items...
       }
     </app-widget>
   </ng-template>

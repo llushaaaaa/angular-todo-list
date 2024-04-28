@@ -67,7 +67,7 @@ export class TodosService {
 
     const todos = [
       ...this.todos.slice(0, todoIndex),
-      ...this.todos.slice(todoIndex, this.todos.length - 1),
+      ...this.todos.slice(todoIndex + 1, this.todos.length),
     ];
 
     this.setTodosInLocalStorage(todos)
@@ -82,7 +82,7 @@ export class TodosService {
     const todos = [
       ...this.todos.slice(0, todoIndex),
       { ...todo, favorite: !todo.favorite },
-      ...this.todos.slice(todoIndex, this.todos.length - 1),
+      ...this.todos.slice(todoIndex + 1, this.todos.length),
     ];
 
     this.setTodosInLocalStorage(todos).pipe(debounceTime(300)).subscribe();
