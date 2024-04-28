@@ -39,7 +39,13 @@ export class TodosService {
         take(1),
         delay(DELAY_MS),
         finalize(() => this.todosLoading$.next(false)),
-        tap((todos) => this.todos$.next((todos ?? []) as ITodo[])),
+        tap((items) => {
+          const todos: ITodo[] = (items ?? []) as ITodo[];
+
+          !todos.length && this.router.navigate(['/add']);
+
+          this.todos$.next(todos);
+        }),
         tap(this.filterTodos)
       )
       .subscribe();
