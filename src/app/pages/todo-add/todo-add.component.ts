@@ -52,12 +52,7 @@ export class TodoAddComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
 
-  constructor(
-    private fb: FormBuilder,
-    private todosService: TodosService,
-    private router: Router,
-    private cdRef: ChangeDetectorRef
-  ) {}
+  constructor(private fb: FormBuilder, private todosService: TodosService) {}
 
   ngOnInit(): void {
     this.initForm();
@@ -86,13 +81,7 @@ export class TodoAddComponent implements OnInit, OnDestroy {
       createAt: DateTime.now().toISO(),
     };
 
-    this.todosService
-      .addTodo(todo)
-      .pipe(
-        takeUntil(this.destroy$),
-        finalize(() => this.router.navigate(['/list']))
-      )
-      .subscribe();
+    this.todosService.addTodo(todo);
   }
 
   private initForm(): void {

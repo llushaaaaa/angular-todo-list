@@ -4,28 +4,30 @@
   <div class="widget-with-todos-item-wrapper">
     <!-- Create At -->
     <div class="widget-with-todos-item__create-at">
-      {{ todo.createAt | date }}
       <span *ngIf="isFirstItem">Create At</span>
+      {{ todo.createAt | date }}
     </div>
     <!-- Expiration At -->
     <div class="widget-with-todos-item__expiration-at">
-      {{ todo.expirationAt | date }}
       <span *ngIf="isFirstItem">{{ expirationAtColumnName }}</span>
+      {{ exprirationAt }}
     </div>
     <!-- Favorite Icon Button -->
     <button
-      class="widget-with-todos-item__favorite"
       mat-icon-button
+      class="widget-with-todos-item__favorite"
       [color]="todo.favorite ? 'warn' : 'primary'"
+      [disabled]="todosService.disabledButtons$ | async"
       (click)="favorite.emit(todo.id)"
     >
       <mat-icon>favorite</mat-icon>
     </button>
     <!-- Remove Icon Button -->
     <button
-      class="widget-with-todos-item__remove"
       mat-icon-button
+      class="widget-with-todos-item__remove"
       color="warn"
+      [disabled]="todosService.disabledButtons$ | async"
       (click)="remove.emit(todo.id)"
     >
       <mat-icon>delete</mat-icon>

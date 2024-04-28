@@ -11,7 +11,7 @@ import { TodosService } from '@services/todos.service';
 import { MatDialog } from '@angular/material/dialog';
 import { WidgetWithTodosRemoveDialogComponent } from './widget-with-todos-remove-dialog/widget-with-todos-remove-dialog.component';
 import { ITodo } from '@interfaces/todo.interface';
-import { filter, finalize, tap } from 'rxjs';
+import { filter, finalize, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-widget-with-todos',
