@@ -5,9 +5,7 @@ interface IFormattedDate {
 }
 
 export const formattedDate = (value: string): IFormattedDate => {
-  const month = Number(value.substring(0, 2));
-  const day = Number(value.substring(2, 4));
-  const year = Number(value.substring(4));
+  const [month, day, year] = value.split('/');
 
-  return { month, day, year };
+  return { month: Number(month), day: Number(day), year: Number(year) };
 };

@@ -1,0 +1,35 @@
+.widget-with-todos-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 0.0625rem solid var(--color-secondary);
+  border-radius: var(--border-radius);
+  padding: 0.3125rem 0.625rem;
+  column-gap: 0.625rem;
+  margin-bottom: 0.9375rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &__title {
+    font-weight: 700;
+    font-size: 1.125rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 80%;
+  }
+
+  &-wrapper {
+    display: flex;
+    align-items: center;
+    column-gap: 1.25rem;
+  }
+
+  &__create-at,
+  &__expiration-at {
+    font-weight: 500;
+    white-space: nowrap;
+  }
+}

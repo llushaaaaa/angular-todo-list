@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  OnDestroy,
   OnInit,
 } from '@angular/core';
 import {
@@ -20,6 +21,8 @@ import { FormFieldsModule } from '@shared/components/form-fields/form-fields.mod
 import { ButtonComponent } from '@shared/components/button/button.component';
 import { ITodo } from '@interfaces/todo.interface';
 import { getExpirationDate } from '@shared/utils/get-expiration-date.util';
+import { Subject, finalize, takeUntil, tap } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-todo-add',
@@ -36,7 +39,7 @@ import { getExpirationDate } from '@shared/utils/get-expiration-date.util';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TodoAddComponent implements OnInit {
+export class TodoAddComponent implements OnInit, OnDestroy {
   public todoAddForm = new FormGroup<any>({});
 
   public todayDateWithTime = DateTime.local();
@@ -47,14 +50,22 @@ export class TodoAddComponent implements OnInit {
     millisecond: 0,
   });
 
+  private destroy$ = new Subject<void>();
+
   constructor(
     private fb: FormBuilder,
     private todosService: TodosService,
+    private router: Router,
     private cdRef: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
     this.initForm();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   public getFormControl(name: string): FormControl {
@@ -75,7 +86,13 @@ export class TodoAddComponent implements OnInit {
       createAt: DateTime.now().toISO(),
     };
 
-    this.todosService.addTodo(todo);
+    this.todosService
+      .addTodo(todo)
+      .pipe(
+        takeUntil(this.destroy$),
+        finalize(() => this.router.navigate(['/list']))
+      )
+      .subscribe();
   }
 
   private initForm(): void {

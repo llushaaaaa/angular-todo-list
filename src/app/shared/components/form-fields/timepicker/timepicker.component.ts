@@ -68,10 +68,10 @@ export class TimepickerComponent implements OnInit, OnDestroy {
 
           const { hours, minutes } = formattedTime(value);
 
-          const expirationDate = getExpirationDate(
-            this.dateControl.value,
-            this.control.value
-          );
+          // const expirationDate = getExpirationDate(
+          //   this.dateControl.value,
+          //   this.control.value
+          // );
 
           if (hours < 24 && minutes < 60) return;
 
