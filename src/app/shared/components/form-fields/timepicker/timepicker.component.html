@@ -1,4 +1,8 @@
 <div class="form-field-timepicker">
+  <div
+    *ngIf="isDisabledTimepicker"
+    class="form-field-timepicker__disabled"
+  ></div>
   <mat-form-field appearance="outline">
     <!-- Label -->
     <mat-label>{{ label }}</mat-label>

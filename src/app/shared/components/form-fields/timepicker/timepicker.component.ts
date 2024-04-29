@@ -10,7 +10,7 @@ import { FormControl } from '@angular/forms';
 import { Subject, takeUntil, tap } from 'rxjs';
 import { DateTime } from 'luxon';
 import { formattedTime } from '@shared/utils/formatted-time.util';
-import { getExpirationDate } from '@shared/utils/get-expiration-date.util';
+import { isToday } from '@shared/utils/is-today.util';
 
 @Component({
   selector: 'form-field-timepicker',
@@ -32,16 +32,19 @@ export class TimepickerComponent implements OnInit, OnDestroy {
     clockFace: { clockHandColor: '#3f51b5' },
   };
 
+  public isDisabledTimepicker: boolean = true;
+
   private destroy$ = new Subject<void>();
 
-  public get isNeededMinDateTime(): boolean {
-    return this.dateControl.touched && this.dateControl.valid;
+  public get dateControlValue(): DateTime {
+    return DateTime.fromJSDate(new Date(this.dateControl.value));
   }
 
   constructor(private cdRef: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.subscribeControlValueChanges();
+    this.subscribeDateControlValueChanges();
   }
 
   ngOnDestroy(): void {
@@ -76,6 +79,23 @@ export class TimepickerComponent implements OnInit, OnDestroy {
           if (hours < 24 && minutes < 60) return;
 
           this.control.setErrors({ invalidTime: true });
+        })
+      )
+      .subscribe();
+  }
+
+  private subscribeDateControlValueChanges(): void {
+    this.dateControl.valueChanges
+      .pipe(
+        takeUntil(this.destroy$),
+        tap(() => {
+          this.isDisabledTimepicker = this.dateControl.invalid;
+
+          this.minDateTime = isToday(this.dateControlValue)
+            ? DateTime.local()
+            : DateTime.local().set({ hour: 0 });
+
+          this.cdRef.markForCheck();
         })
       )
       .subscribe();
