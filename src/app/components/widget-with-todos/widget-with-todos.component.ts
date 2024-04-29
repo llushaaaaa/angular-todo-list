@@ -7,17 +7,17 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { WidgetComponent } from '@components/widget/widget.component';
-import { WidgetWithTodosItemComponent } from './widget-with-todos-item/widget-with-todos-item.component';
-import { TodosService } from '@services/todos.service';
 import { MatDialog } from '@angular/material/dialog';
-import { WidgetWithTodosRemoveDialogComponent } from './widget-with-todos-remove-dialog/widget-with-todos-remove-dialog.component';
-import { ITodo } from '@interfaces/todo.interface';
-import { Subject, filter, finalize, takeUntil, tap } from 'rxjs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { EFilter } from './widget-with-todos.enum';
-import { isToday } from '@shared/utils/is-today.util';
+import { Subject, filter, finalize, tap } from 'rxjs';
 import { DateTime } from 'luxon';
+import { WidgetComponent } from '@components/widget/widget.component';
+import { ITodo } from '@interfaces/todo.interface';
+import { isToday } from '@shared/utils/is-today.util';
+import { TodosService } from '@services/todos.service';
+import { WidgetWithTodosItemComponent } from './widget-with-todos-item/widget-with-todos-item.component';
+import { WidgetWithTodosRemoveDialogComponent } from './widget-with-todos-remove-dialog/widget-with-todos-remove-dialog.component';
+import { EFilter } from './widget-with-todos.enum';
 
 @Component({
   selector: 'app-widget-with-todos',

@@ -10,12 +10,13 @@ import {
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { interval, map, takeWhile, tap } from 'rxjs';
+import { DateTime } from 'luxon';
 import { ITodo } from '@interfaces/todo.interface';
 import { TodosService } from '@services/todos.service';
 import { SkeletonComponent } from '@shared/components/skeleton/skeleton.component';
 import { calculateTimeRemaining } from '@shared/utils/calculate-time-remaining.util';
-import { DateTime } from 'luxon';
-import { interval, map, takeWhile, tap } from 'rxjs';
+
 
 @Component({
   selector: 'app-widget-with-todos-item',

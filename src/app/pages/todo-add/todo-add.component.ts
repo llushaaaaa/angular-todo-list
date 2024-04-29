@@ -1,6 +1,5 @@
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   OnDestroy,
   OnInit,
@@ -13,17 +12,16 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { WidgetComponent } from '@components/widget/widget.component';
+import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { TodosService } from '@services/todos.service';
+import { Subject } from 'rxjs';
 import { DateTime } from 'luxon';
+import { WidgetComponent } from '@components/widget/widget.component';
+import { TodosService } from '@services/todos.service';
+import { ITodo } from '@interfaces/todo.interface';
 import { FormFieldsModule } from '@shared/components/form-fields/form-fields.module';
 import { ButtonComponent } from '@shared/components/button/button.component';
-import { ITodo } from '@interfaces/todo.interface';
 import { getExpirationDate } from '@shared/utils/get-expiration-date.util';
-import { Subject, finalize, takeUntil, tap } from 'rxjs';
-import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-todo-add',

@@ -7,10 +7,10 @@ import {
   OnInit,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Subject, takeUntil, tap } from 'rxjs';
+import { DateTime } from 'luxon';
 import { formattedTime } from '@shared/utils/formatted-time.util';
 import { getExpirationDate } from '@shared/utils/get-expiration-date.util';
-import { DateTime } from 'luxon';
-import { Subject, takeUntil, tap } from 'rxjs';
 
 @Component({
   selector: 'form-field-timepicker',
