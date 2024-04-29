@@ -7,7 +7,7 @@
     <!-- Burger Menu Icon -->
     <mat-icon
       class="header__burger-menu-icon icon"
-      (click)="toggleBurgerMenu()"
+      (click)="openBurgerMenu()"
     >
       menu
     </mat-icon>
@@ -15,12 +15,12 @@
     <nav class="header-menu" [class.burger-menu-open]="isBurgerMenuOpen">
       <mat-icon
         class="header-menu__close-icon icon"
-        (click)="toggleBurgerMenu()"
+        (click)="closeBurgerMenu()"
       >
         close
       </mat-icon>
       <ul class="header-menu__list">
-        <li class="header-menu__item" (click)="toggleBurgerMenu()">
+        <li class="header-menu__item" (click)="closeBurgerMenu()">
           <a
             class="header-menu__link"
             routerLink="/add"
@@ -29,7 +29,7 @@
             Todo Add
           </a>
         </li>
-        <li class="header-menu__item" (click)="toggleBurgerMenu()">
+        <li class="header-menu__item" (click)="closeBurgerMenu()">
           <a
             class="header-menu__link"
             routerLink="/list"
@@ -38,7 +38,7 @@
             Todo List
           </a>
         </li>
-        <li class="header-menu__item" (click)="toggleBurgerMenu()">
+        <li class="header-menu__item" (click)="closeBurgerMenu()">
           <a
             class="header-menu__link"
             routerLink="/favorite"

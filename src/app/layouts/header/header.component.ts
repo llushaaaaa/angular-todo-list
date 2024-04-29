@@ -13,7 +13,11 @@ import { MatIconModule } from '@angular/material/icon';
 export class HeaderComponent {
   public isBurgerMenuOpen: boolean = false;
 
-  public toggleBurgerMenu(): void {
-    this.isBurgerMenuOpen = !this.isBurgerMenuOpen;
+  public openBurgerMenu(): void {
+    this.isBurgerMenuOpen = true;
+  }
+
+  public closeBurgerMenu(): void {
+    this.isBurgerMenuOpen = false;
   }
 }
