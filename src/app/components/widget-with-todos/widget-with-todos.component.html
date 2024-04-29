@@ -1,4 +1,5 @@
 <div class="widget-with-todos">
+  <!-- Spinner -->
   <ng-container *ngIf="todosService.todosLoading$ | async; else widgets">
     <mat-spinner
       class="widget-with-todos__spinner"
@@ -6,9 +7,11 @@
     ></mat-spinner>
   </ng-container>
   <ng-template #widgets>
+    <!-- Widget Today Todos  -->
     <app-widget [title]="'Today Todo List'">
       @if(todayTodos.length) { 
         @for (todo of todayTodos; track todo.id) {
+          <!-- Widget Today Todos Items -->
           <app-widget-with-todos-item
             [todo]="todo"
             [isFirstItem]="$index === 0"
@@ -18,12 +21,15 @@
           ></app-widget-with-todos-item>
         } 
       } @else {
+        <!-- No Items Plug -->
         <div class="widget-with-todos__no-items">No todos...</div>
       }
     </app-widget>
+     <!-- Widget Except Today Todos -->
     <app-widget [title]="'My Todo List'">
       @if(exceptTodayTodos.length) { 
         @for (todo of exceptTodayTodos; track todo.id) {
+          <!-- Widget Except Today Todos Items -->
           <app-widget-with-todos-item
             [todo]="todo"
             [isFirstItem]="$index === 0"
@@ -33,6 +39,7 @@
           ></app-widget-with-todos-item>
         } 
       } @else {
+        <!-- No Items Plug -->
         <div class="widget-with-todos__no-items">No todos...</div>
       }
     </app-widget>

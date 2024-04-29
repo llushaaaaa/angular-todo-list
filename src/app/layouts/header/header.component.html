@@ -4,7 +4,7 @@
     <div class="header-logo">
       <a class="header-logo__link" routerLink="/list">Todo List</a>
     </div>
-    <!-- Burger Menu Icon -->
+    <!-- Burger Menu Icon (Mobile) -->
     <mat-icon
       class="header__burger-menu-icon icon"
       (click)="openBurgerMenu()"
@@ -13,12 +13,14 @@
     </mat-icon>
     <!-- Menu -->
     <nav class="header-menu" [class.burger-menu-open]="isBurgerMenuOpen">
+      <!-- Menu Close Icons (Mobile) -->
       <mat-icon
         class="header-menu__close-icon icon"
         (click)="closeBurgerMenu()"
       >
         close
       </mat-icon>
+      <!-- Menu List -->
       <ul class="header-menu__list">
         <li class="header-menu__item" (click)="closeBurgerMenu()">
           <a

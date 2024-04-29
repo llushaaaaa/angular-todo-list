@@ -1,14 +1,18 @@
 <div class="todo-add">
+  <!-- Widget -->
   <app-widget [title]="'Todo Add'">
+    <!-- Form -->
     <form
       class="todo-add-form"
       [formGroup]="todoAddForm"
       (ngSubmit)="onCreateTodo()"
     >
+      <!-- Title Form Field -->
       <form-field-textarea
         [label]="'Title'"
         [control]="this.getFormControl('title')"
       ></form-field-textarea>
+      <!-- Expiration Date Form Field -->
       <form-field-datepicker
         [label]="'Expiration date'"
         [control]="this.getFormControl('expirationDate')"
@@ -16,6 +20,7 @@
         [mask]="'00/00/0000'"
         [minDateTime]="todayDateWithoutTime"
       ></form-field-datepicker>
+      <!-- Expiration Time Form Field -->
       <form-field-timepicker
         [label]="'Expiration time'"
         [control]="this.getFormControl('expirationTime')"
@@ -24,6 +29,7 @@
         [mask]="'00:00'"
         [minDateTime]="todayDateWithTime"
       ></form-field-timepicker>
+      <!-- Submit Button -->
       <app-button
         class="todo-add__button"
         [text]="

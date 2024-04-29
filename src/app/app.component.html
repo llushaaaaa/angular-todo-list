@@ -1,8 +1,11 @@
 <div class="app">
+  <!-- Header -->
   <app-header></app-header>
   <div class="app-container">
     <div class="app-title">
+      <!-- Title -->
       <h2>{{ title }}</h2>
+      <!-- Back Button -->
       <button
         *ngIf="title === ETitles.TODO_ADD"
         mat-icon-button
@@ -11,6 +14,7 @@
         <mat-icon>arrow_back</mat-icon>
       </button>
     </div>
+    <!-- Routes -->
     <router-outlet></router-outlet>
   </div>
 </div>
