@@ -5,7 +5,12 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import {
+  NavigationEnd,
+  Router,
+  RouterModule,
+  RouterOutlet,
+} from '@angular/router';
 import { HeaderComponent } from './layouts/header/header.component';
 import { Subject, filter, take, takeUntil } from 'rxjs';
 import { ETitles } from '@enums/titles.enum';
@@ -13,6 +18,8 @@ import { ERoutes } from '@enums/routers.enum';
 import { TodosService } from '@services/todos.service';
 import { ButtonComponent } from '@shared/components/button/button.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 const TITLES: Record<ERoutes, ETitles> = {
   [ERoutes.LIST]: ETitles.TODO_LIST,
@@ -29,6 +36,9 @@ const TITLES: Record<ERoutes, ETitles> = {
     HeaderComponent,
     ButtonComponent,
     MatProgressSpinnerModule,
+    RouterModule,
+    MatButtonModule,
+    MatIconModule,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
@@ -51,10 +61,6 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
-  }
-
-  public goToTodoList(): void {
-    this.router.navigate(['list']);
   }
 
   private subscribeRouterEvents(): void {

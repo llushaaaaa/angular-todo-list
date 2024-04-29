@@ -3,11 +3,13 @@
   <div class="app-container">
     <div class="app-title">
       <h2>{{ title }}</h2>
-      <app-button
+      <button
         *ngIf="title === ETitles.TODO_ADD"
-        [text]="'Back'"
-        (click)="goToTodoList()"
-      ></app-button>
+        mat-icon-button
+        [routerLink]="'/'"
+      >
+        <mat-icon>arrow_back</mat-icon>
+      </button>
     </div>
     <router-outlet></router-outlet>
   </div>

@@ -1,11 +1,19 @@
+$mobile: 600px;
+
 .widget-with-todos-item {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   border: 0.0625rem solid var(--color-secondary);
   border-top: none;
   padding: 0.125rem 0.625rem;
   column-gap: 0.625rem;
   margin-bottom: 0.9375rem;
+
+  @media (max-width: $mobile) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
   &.first-item {
     border-top: 0.0625rem solid var(--color-secondary);
@@ -18,19 +26,41 @@
   &__title {
     font-weight: 700;
     font-size: 1.125rem;
-    width: 100%;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
+
+    @media (min-width: $mobile) {
+      width: 100%;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    @media (max-width: $mobile) {
+      word-break: break-word;
+    }
+  }
+
+  &-wrapper {
+    display: flex;
+    align-items: center;
+
+    @media (max-width: $mobile) {
+      width: 100%;
+      justify-content: space-between;
+    }
   }
 
   &__create-at,
   &__expiration-at {
-    width: 200px;
+    width: 120px;
     position: relative;
     font-weight: 500;
     white-space: nowrap;
     text-align: center;
+
+    @media (max-width: $mobile) {
+      width: auto;
+      text-align: left;
+    }
 
     span {
       position: absolute;
@@ -39,6 +69,10 @@
       transform: translateX(-50%);
       font-weight: 500;
       color: initial;
+
+      @media (max-width: $mobile) {
+        display: none;
+      }
     }
   }
 
@@ -51,7 +85,11 @@
       display: block;
       width: 4.0625rem;
       height: 1.25rem;
-      margin: 0 auto; 
+      margin: 0 auto;
+
+      @media (max-width: $mobile) {
+        margin: 0;
+      }
     }
   }
 }
