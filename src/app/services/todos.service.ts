@@ -51,7 +51,7 @@ export class TodosService {
 
     const todos = [...this.todos, todo] as ITodo[];
 
-    this.setTodosInLocalStorage(todos)
+    this.setTodosInLocalStorage$(todos)
       .pipe(
         finalize(() => {
           this.addTodoLoading$.next(false);
@@ -71,7 +71,7 @@ export class TodosService {
       ...this.todos.slice(todoIndex + 1, this.todos.length),
     ];
 
-    this.setTodosInLocalStorage(todos)
+    this.setTodosInLocalStorage$(todos)
       .pipe(finalize(() => this.removeTodoLoading$.next(false)))
       .subscribe();
   }
@@ -86,10 +86,10 @@ export class TodosService {
       ...this.todos.slice(todoIndex + 1, this.todos.length),
     ];
 
-    this.setTodosInLocalStorage(todos).pipe(debounceTime(300)).subscribe();
+    this.setTodosInLocalStorage$(todos).pipe(debounceTime(300)).subscribe();
   }
 
-  private setTodosInLocalStorage(todos: ITodo[]): Observable<void> {
+  private setTodosInLocalStorage$(todos: ITodo[]): Observable<void> {
     return this.storage.set('todos', todos).pipe(
       take(1),
       delay(DELAY_MS),

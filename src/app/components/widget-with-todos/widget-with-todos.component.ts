@@ -100,5 +100,7 @@ export class WidgetWithTodosComponent implements OnInit, OnDestroy {
 
     this.todayTodos = todayTodos;
     this.exceptTodayTodos = exceptTodayTodos;
+
+    this.cdRef.markForCheck();
   };
 }
