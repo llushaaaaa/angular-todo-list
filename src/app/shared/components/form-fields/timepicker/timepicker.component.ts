@@ -5,6 +5,7 @@ import {
   Input,
   OnDestroy,
   OnInit,
+  inject,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Subject, takeUntil, tap } from 'rxjs';
@@ -19,6 +20,8 @@ import { isToday } from '@shared/utils/is-today.util';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TimepickerComponent implements OnInit, OnDestroy {
+  private cdRef = inject(ChangeDetectorRef);
+
   @Input() control: FormControl = new FormControl();
   @Input() dateControl: FormControl = new FormControl();
   @Input() label: string = '';
@@ -39,8 +42,6 @@ export class TimepickerComponent implements OnInit, OnDestroy {
   public get dateControlValue(): DateTime {
     return DateTime.fromJSDate(new Date(this.dateControl.value));
   }
-
-  constructor(private cdRef: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.subscribeControlValueChanges();

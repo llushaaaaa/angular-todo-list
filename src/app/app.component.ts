@@ -4,6 +4,7 @@ import {
   Component,
   OnDestroy,
   OnInit,
+  inject,
 } from '@angular/core';
 import {
   NavigationEnd,
@@ -45,13 +46,14 @@ const TITLES: Record<ERoutes, ETitles> = {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit, OnDestroy {
+  private todosService = inject(TodosService);
+  private router = inject(Router);
+
   public title = ETitles.TODO_LIST;
 
   public ETitles = ETitles;
 
   private destroy$ = new Subject<void>();
-
-  constructor(private todosService: TodosService, private router: Router) {}
 
   ngOnInit(): void {
     this.subscribeRouterEvents();

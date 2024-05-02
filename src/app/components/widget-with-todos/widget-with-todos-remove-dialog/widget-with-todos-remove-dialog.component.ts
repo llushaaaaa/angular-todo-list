@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import {
   MatDialogActions,
@@ -23,7 +23,5 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WidgetWithTodosRemoveDialogComponent {
-  constructor(
-    public dialogRef: MatDialogRef<WidgetWithTodosRemoveDialogComponent>
-  ) {}
+  public dialogRef = inject(MatDialogRef<WidgetWithTodosRemoveDialogComponent>);
 }

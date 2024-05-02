@@ -6,6 +6,7 @@ import {
   Input,
   OnDestroy,
   OnInit,
+  inject,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -33,18 +34,16 @@ import { EFilter } from './widget-with-todos.enum';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WidgetWithTodosComponent implements OnInit, OnDestroy {
+  public readonly todosService = inject(TodosService);
+  private dialog = inject(MatDialog);
+  private cdRef = inject(ChangeDetectorRef);
+
   @Input() filter: EFilter = EFilter.ALL;
 
   public todayTodos: ITodo[] = [];
   public exceptTodayTodos: ITodo[] = [];
 
   private destroy$ = new Subject<void>();
-
-  constructor(
-    public readonly todosService: TodosService,
-    private dialog: MatDialog,
-    private cdRef: ChangeDetectorRef
-  ) {}
 
   ngOnInit(): void {
     this.subscribeTodos();

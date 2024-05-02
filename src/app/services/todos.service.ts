@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ITodo } from '@interfaces/todo.interface';
 import { StorageMap } from '@ngx-pwa/local-storage';
@@ -18,6 +18,9 @@ const DELAY_MS = 700;
 
 @Injectable({ providedIn: 'root' })
 export class TodosService {
+  private storage = inject(StorageMap);
+  private router = inject(Router);
+
   public todos$ = new BehaviorSubject<ITodo[]>([]);
 
   public todosLoading$ = new BehaviorSubject<boolean>(true);
@@ -27,8 +30,6 @@ export class TodosService {
   public get todos(): ITodo[] {
     return this.todos$.getValue();
   }
-
-  constructor(private storage: StorageMap, private router: Router) {}
 
   public initializeTodos(): void {
     this.storage

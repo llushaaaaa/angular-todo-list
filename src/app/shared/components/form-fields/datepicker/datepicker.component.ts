@@ -6,6 +6,7 @@ import {
   OnDestroy,
   OnInit,
   ViewChild,
+  inject,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import {
@@ -22,6 +23,8 @@ import { DateTime } from 'luxon';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DatepickerComponent implements OnInit, OnDestroy {
+  private cdRef = inject(ChangeDetectorRef);
+
   @Input() control: FormControl = new FormControl();
   @Input() label: string = '';
   @Input() placeholder: string = '';
@@ -39,9 +42,7 @@ export class DatepickerComponent implements OnInit, OnDestroy {
     if (!this.minDateTime) return null;
     return new Date(this.minDateTime.toString());
   }
-
-  constructor(private cdRef: ChangeDetectorRef) {}
-
+  
   ngOnInit(): void {
     this.subscribeControlValueChanges();
   }

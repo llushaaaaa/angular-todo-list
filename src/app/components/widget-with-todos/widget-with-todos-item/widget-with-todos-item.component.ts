@@ -7,6 +7,7 @@ import {
   Input,
   OnInit,
   Output,
+  inject,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -17,7 +18,6 @@ import { TodosService } from '@services/todos.service';
 import { SkeletonComponent } from '@shared/components/skeleton/skeleton.component';
 import { calculateTimeRemaining } from '@shared/utils/calculate-time-remaining.util';
 
-
 @Component({
   selector: 'app-widget-with-todos-item',
   standalone: true,
@@ -27,6 +27,9 @@ import { calculateTimeRemaining } from '@shared/utils/calculate-time-remaining.u
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WidgetWithTodosItemComponent implements OnInit {
+  public readonly todosService = inject(TodosService);
+  private cdRef = inject(ChangeDetectorRef);
+
   @Input() todo: ITodo | null = null;
   @Input() isTodayTodo: boolean = true;
   @Input() isFirstItem: boolean = true;
@@ -46,11 +49,6 @@ export class WidgetWithTodosItemComponent implements OnInit {
     if (!this.todo) return null;
     return DateTime.fromISO(this.todo.expirationAt);
   }
-
-  constructor(
-    public readonly todosService: TodosService,
-    private cdRef: ChangeDetectorRef
-  ) {}
 
   ngOnInit(): void {
     this.checkExpirationAt();

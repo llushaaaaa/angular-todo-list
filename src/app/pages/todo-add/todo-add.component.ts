@@ -3,6 +3,7 @@ import {
   Component,
   OnDestroy,
   OnInit,
+  inject,
 } from '@angular/core';
 import {
   FormBuilder,
@@ -40,6 +41,9 @@ import { getExpirationDate } from '@shared/utils/get-expiration-date.util';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TodoAddComponent implements OnInit, OnDestroy {
+  public readonly todosService = inject(TodosService);
+  private fb = inject(FormBuilder);
+
   public todoAddForm = new FormGroup<any>({});
 
   public todayDateWithTime = DateTime.local();
@@ -51,11 +55,6 @@ export class TodoAddComponent implements OnInit, OnDestroy {
   });
 
   private destroy$ = new Subject<void>();
-
-  constructor(
-    public readonly todosService: TodosService,
-    private fb: FormBuilder
-  ) {}
 
   ngOnInit(): void {
     this.initForm();
