@@ -23,6 +23,8 @@ import { ITodo } from '@interfaces/todo.interface';
 import { FormFieldsModule } from '@shared/components/form-fields/form-fields.module';
 import { ButtonComponent } from '@shared/components/button/button.component';
 import { getExpirationDate } from '@shared/utils/get-expiration-date.util';
+import { ITodoAddForm } from './todo-add.interface';
+import { TypedFormGroup } from '@shared/types/typed-form.type';
 
 @Component({
   selector: 'app-todo-add',
@@ -44,7 +46,7 @@ export class TodoAddComponent implements OnInit, OnDestroy {
   public readonly todosService = inject(TodosService);
   private fb = inject(FormBuilder);
 
-  public todoAddForm = new FormGroup<any>({});
+  public todoAddForm!: TypedFormGroup<ITodoAddForm>;
 
   public todayDateWithTime = DateTime.local();
   public todayDateWithoutTime = this.todayDateWithTime.set({
