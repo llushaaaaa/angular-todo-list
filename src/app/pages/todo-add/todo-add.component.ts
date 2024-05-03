@@ -8,7 +8,6 @@ import {
 import {
   FormBuilder,
   FormControl,
-  FormGroup,
   FormsModule,
   ReactiveFormsModule,
   Validators,
@@ -23,8 +22,8 @@ import { ITodo } from '@interfaces/todo.interface';
 import { FormFieldsModule } from '@shared/components/form-fields/form-fields.module';
 import { ButtonComponent } from '@shared/components/button/button.component';
 import { getExpirationDate } from '@shared/utils/get-expiration-date.util';
-import { ITodoAddForm } from './todo-add.interface';
 import { TypedFormGroup } from '@shared/types/typed-form.type';
+import { ITodoAddForm } from './todo-add.interface';
 
 @Component({
   selector: 'app-todo-add',
